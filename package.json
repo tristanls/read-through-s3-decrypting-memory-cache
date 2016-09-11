@@ -1,0 +1,33 @@
+{
+  "name": "read-through-s3-decrypting-memory-cache",
+  "version": "0.0.0",
+  "description": "Read-through in-memory cache for AWS S3 objects that are reasonable to cache in memory and need to be decrypted using AWS KMS",
+  "scripts": {
+    "assert-latest-node": "(node -v | grep -q ${npm_package_scriptvars_latest_node}) || (echo \"Expected node version ${npm_package_scriptvars_latest_node}, got $(node -v)\" && exit 1)",
+    "private-install": "rm -rf node_modules && npm run assert-latest-node && npm install && npm list 1>/dev/null",
+    "private-install-prod": "rm -rf node_modules && npm run assert-latest-node && npm install --production && npm list 1>/dev/null",
+    "test": "npm run assert-latest-node && npm list 1>/dev/null && node scripts/test.js"
+  },
+  "scriptvars": {
+    "latest_node": "v6.5.0"
+  },
+  "main": "index.js",
+  "devDependencies": {
+    "nodeunit": "0.10.2",
+    "proxyquire": "1.7.10",
+    "scripts-nodeunit-test": "1.0.1"
+  },
+  "dependencies": {
+    "aws-sdk": "2.6.1",
+    "clone": "1.0.2",
+    "joi": "9.0.4",
+    "mark-time": "1.0.0",
+    "telemetry-events": "1.0.1",
+    "telemetry-events-log": "1.0.0",
+    "telemetry-events-quantify": "1.0.0"
+  },
+  "contributors": [
+    "Tristan Slominski <tristan.slominski@gmail.com>"
+  ],
+  "license": "MIT"
+}
