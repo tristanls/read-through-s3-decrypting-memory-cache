@@ -99,9 +99,14 @@ Cache.S3_NOT_FOUND_CODES =
 ];
 
 
-Cache.prototype.get = function(key, callback)
+Cache.prototype.get = function(key, context, callback)
 {
     const self = this;
+    if (context && context instanceof Function)
+    {
+        callback = context;
+        context = {};
+    }
     if (self._cache.has(key))
     {
         return callback(undefined, self._cache.get(key));
@@ -129,6 +134,11 @@ Cache.prototype.get = function(key, callback)
                 args: [params]
             }
         });
+        let traceSpan;
+        if (context.parentSpan)
+        {
+            traceSpan = context.parentSpan.childSpan("AWS.S3.getObject");
+        }
         const startTime = markTime();
         self._s3.getObject(params, (error, data) =>
         {
@@ -155,7 +165,16 @@ Cache.prototype.get = function(key, callback)
                     error,
                     stack: error.stack
                 });
+                if (traceSpan)
+                {
+                    traceSpan.tag("error", true);
+                    traceSpan.finish();
+                }
                 return callback(error);
+            }
+            if (traceSpan)
+            {
+                traceSpan.finish();
             }
             dataBag.ciphertext = data.Body;
             workflow.emit("kms.decrypt", dataBag)
@@ -191,6 +210,11 @@ Cache.prototype.get = function(key, callback)
                 args: [redactedParams]
             }
         });
+        let traceSpan;
+        if (context.parentSpan)
+        {
+            traceSpan = context.parentSpan.childSpan("AWS.KMS.decrypt");
+        }
         const startTime = markTime();
         self._kms.decrypt(params, (error, data) =>
         {
@@ -215,7 +239,16 @@ Cache.prototype.get = function(key, callback)
                         stack: error.stack
                     }
                 );
+                if (traceSpan)
+                {
+                    traceSpan.tag("error", true);
+                    traceSpan.finish();
+                }
                 return callback(error);
+            }
+            if (traceSpan)
+            {
+                traceSpan.finish();
             }
             if (!data.Plaintext)
             {
