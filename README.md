@@ -82,7 +82,9 @@ Default S3 error codes to treat as "not found" (`AccessDenied` can occur if the 
 
   * `config`: _Object_ Cache configuration.
     * `bucket`: _String_ Name of S3 bucket to retrieve values from.
+    * `encryptionContext`: _Object_ Encryption context to extend when attempting KMS decryption.
     * `initialCache`: _Map_ _(Default: undefined)_ Initial cached values to use.
+    * `stdoutTelemetry`: _Boolean_ _(Default: false)_ If `true`, telemetry will be emitted to `stdout`.
 
 Creates a new Cache.
 

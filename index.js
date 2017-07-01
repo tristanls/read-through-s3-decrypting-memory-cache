@@ -9,6 +9,7 @@ const markTime = require("mark-time");
 const pkg = require("./package.json");
 const QuantifyTelemetryEvents = require("telemetry-events-quantify");
 const TelemetryEvents = require("telemetry-events");
+const TraceTelemetryEvents = require("telemetry-events-trace");
 const util = require("util");
 
 const Cache = module.exports = function(config)
@@ -52,22 +53,31 @@ const Cache = module.exports = function(config)
         package: pkg,
         emitter: self
     });
-    self._log = new LogTelemetryEvents(
+    self._logs = new LogTelemetryEvents(
         {
             telemetry: self._telemetry
         }
-    ).log;
+    );
+    self._log = self._logs.log;
     self._metrics = new QuantifyTelemetryEvents(
     {
         telemetry: self._telemetry
     });
+    self._tracing = new TraceTelemetryEvents(
+        {
+            telemetry: self._telemetry
+        }
+    );
 
-    // debugging
-    // self.on("telemetry", event =>
-    // {
-    //     // clone handles circular dependencies
-    //     console.log(JSON.stringify(clone(event)));
-    // });
+    if (self._stdoutTelemetry)
+    {
+        self.on("telemetry", event =>
+            {
+                // clone handles circular dependencies
+                console.log(JSON.stringify(clone(event)));
+            }
+        );
+    }
 };
 
 util.inherits(Cache, events.EventEmitter);
@@ -78,7 +88,8 @@ Cache.SCHEMA =
         {
             bucket: Joi.string().required(),
             encryptionContext: Joi.object().required(),
-            initialCache: Joi.object().type(Map)
+            initialCache: Joi.object().type(Map),
+            stdoutTelemetry: Joi.bool()
         }
     )
 };
@@ -96,6 +107,7 @@ Cache.prototype.get = function(key, callback)
         return callback(undefined, self._cache.get(key));
     }
     const workflow = new events.EventEmitter();
+    setImmediate(() => workflow.emit("s3.getObject", {key}));
     workflow.on("s3.getObject", dataBag =>
     {
         const _targetMetadata = {
@@ -214,5 +226,4 @@ Cache.prototype.get = function(key, callback)
             return callback(undefined, data.Plaintext);
         })
     });
-    workflow.emit("s3.getObject", {key});
 };
