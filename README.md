@@ -40,7 +40,8 @@ const cache = new Cache(
     bucket: "name-of-my-s3-bucket",
     encryptionContext: {
         some: "encryption context"
-    }
+    },
+    region: "us-east-1"
 });
 cache.get("myKey", (error, value) =>
 {
@@ -55,7 +56,8 @@ const cache2 = new Cache(
     encryptionContext: {
         some: "encryption context"
     },
-    initialCache
+    initialCache,
+    region: "us-east-1"
 });
 cache2.get("myKey", (error, value) =>
 {
@@ -84,6 +86,7 @@ Default S3 error codes to treat as "not found" (`AccessDenied` can occur if the 
     * `bucket`: _String_ Name of S3 bucket to retrieve values from.
     * `encryptionContext`: _Object_ Encryption context to extend when attempting KMS decryption.
     * `initialCache`: _Map_ _(Default: undefined)_ Initial cached values to use.
+    * `region`: _String_ AWS region to configure `KMS` with for decryption.
     * `stdoutTelemetry`: _Boolean_ _(Default: false)_ If `true`, telemetry will be emitted to `stdout`.
 
 Creates a new Cache.
