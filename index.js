@@ -45,7 +45,11 @@ const Cache = module.exports = function(config)
     {
         self._initialCache.forEach((value, key) => self._cache.set(key, value));
     }
-    self._kms = new AWS.KMS();
+    self._kms = new AWS.KMS(
+        {
+            region: self._region
+        }
+    );
     self._s3 = new AWS.S3();
 
     self._telemetry = new TelemetryEvents(
@@ -89,6 +93,7 @@ Cache.SCHEMA =
             bucket: Joi.string().required(),
             encryptionContext: Joi.object().required(),
             initialCache: Joi.object().type(Map),
+            region: Joi.string().required(),
             stdoutTelemetry: Joi.bool()
         }
     )
