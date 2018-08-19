@@ -1,6 +1,6 @@
 {
   "name": "read-through-s3-decrypting-memory-cache",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Read-through in-memory cache for AWS S3 objects that are reasonable to cache in memory and need to be decrypted using AWS KMS",
   "scripts": {
     "assert-latest-node": "(node -v | grep -q ${npm_package_scriptvars_latest_node}) || (echo \"Expected node version ${npm_package_scriptvars_latest_node}, got $(node -v)\" && exit 1)",
