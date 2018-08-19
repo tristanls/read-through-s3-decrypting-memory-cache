@@ -104,14 +104,9 @@ Cache.S3_NOT_FOUND_CODES =
 ];
 
 
-Cache.prototype.get = function(key, context, callback)
+Cache.prototype.get = function(key, callback, context = {})
 {
     const self = this;
-    if (context && context instanceof Function)
-    {
-        callback = context;
-        context = {};
-    }
     if (self._cache.has(key))
     {
         return callback(undefined, self._cache.get(key));

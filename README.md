@@ -72,7 +72,7 @@ cache2.get("myKey", (error, value) =>
 **Public API**
   * [Cache.S3_NOT_FOUND_CODES](#caches3_not_found_codes)
   * [new Cache(config)](#new-cacheconfig)
-  * [cache.get(key, \[context\], callback)](#cachegetkey-context-callback)
+  * [cache.get(key, callback, \[context\])](#cachegetkey-callback-context)
 
 #### Cache.S3_NOT_FOUND_CODES
 
@@ -91,14 +91,14 @@ Default S3 error codes to treat as "not found" (`AccessDenied` can occur if the 
 
 Creates a new Cache.
 
-#### cache.get(key, [context], callback)
+#### cache.get(key, callback, [context])
 
   * `key`: _String_ S3 Key to retrieve from cache.
-  * `context`: _Object_ Optional context.
-    * `parentSpan`: _TraceTelemetryEvents.Span_ Parent span to use to trace execution.
   * `callback`: _Function_ `function(error, value){}`
     * `error`: _Error_ Error, if any.
     * `value`: _Buffer_ S3 Object, if it exists, `undefined` otherwise.
+  * `context`: _Object_ Optional context.
+    * `parentSpan`: _TraceTelemetryEvents.Span_ Parent span to use to trace execution.
 
 Retrieves the cached `value` from memory. If not found in memory, attempts to retrieve the `value` from S3. If not found in S3, caches `undefined` locally, otherwise, decrypts using KMS. If decryption fails, caches `undefined` locally, otherwise caches the platinext `value` locally.
 
