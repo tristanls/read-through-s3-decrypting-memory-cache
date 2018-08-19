@@ -7,20 +7,20 @@
     "test": "npm run assert-latest-node && npm list 1>/dev/null && jest"
   },
   "scriptvars": {
-    "latest_node": "v9.2.0"
+    "latest_node": "v10.9.0"
   },
   "main": "index.js",
   "devDependencies": {
-    "jest": "21.2.1",
-    "module-telemetry-policy": "1.2.3"
+    "jest": "23.5.0",
+    "module-telemetry-policy": "1.2.4"
   },
   "dependencies": {
-    "aws-sdk": "2.150.0",
-    "clone": "2.1.1",
-    "joi": "13.0.2",
+    "aws-sdk": "2.296.0",
+    "clone": "2.1.2",
+    "joi": "13.6.0",
     "mark-time": "1.0.0",
     "telemetry-events": "1.1.0",
-    "telemetry-events-log": "1.0.1",
+    "telemetry-events-log": "2.0.0",
     "telemetry-events-quantify": "1.0.0",
     "telemetry-events-trace": "0.2.0"
   },
