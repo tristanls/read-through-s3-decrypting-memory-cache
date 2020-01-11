@@ -258,7 +258,7 @@ Cache.SCHEMA =
     config: Joi.object().keys(
         {
             bucket: Joi.string().required(),
-            credentials: Joi.object().instance(AWS.Credentials),
+            credentials: Joi.object(),
             encryptionContext: Joi.object().required(),
             initialCache: Joi.object().instance(Map),
             region: Joi.string().required(),
