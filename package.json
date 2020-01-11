@@ -7,16 +7,19 @@
     "test": "npm run assert-latest-node && npm list 1>/dev/null && jest"
   },
   "scriptvars": {
-    "latest_node": "v13.3.0"
+    "latest_node": "v13.6.0"
   },
   "main": "index.js",
   "devDependencies": {
     "jest": "24.9.0",
     "module-telemetry-policy": "1.2.8"
   },
+  "peerDependencies": {
+    "aws-sdk": "^2.591.0"
+  },
   "dependencies": {
-    "@hapi/joi": "16.1.8",
-    "aws-sdk": "2.591.0",
+    "@hapi/joi": "17.0.2",
+    "aws-sdk": "^2.601.0",
     "clone": "2.1.2",
     "mark-time": "1.0.0",
     "telemetry-events": "2.0.0",

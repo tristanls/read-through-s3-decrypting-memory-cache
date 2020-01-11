@@ -84,10 +84,11 @@ Default S3 error codes to treat as "not found" (`AccessDenied` can occur if the 
 
   * `config`: _Object_ Cache configuration.
     * `bucket`: _String_ Name of S3 bucket to retrieve values from.
+    * `credentials`: _AWS.Credentials_ _(Default: undefined)_ AWS credentials to use with S3 and KMS. If not provided, the [default credential provider chain](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CredentialProviderChain.html#defaultProviders-property) will be used.
     * `encryptionContext`: _Object_ Encryption context to extend when attempting KMS decryption.
     * `initialCache`: _Map_ _(Default: undefined)_ Initial cached values to use.
     * `region`: _String_ AWS region to configure `KMS` with for decryption.
-    * `stdoutTelemetry`: _Boolean_ _(Default: false)_ If `true`, telemetry will be emitted to `stdout`.
+    * `stderrTelemetry`: _Boolean_ _(Default: false)_ If `true`, telemetry will be emitted to `stderr`.
 
 Creates a new Cache.
 
